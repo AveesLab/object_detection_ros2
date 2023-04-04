@@ -2,6 +2,11 @@
 
 ROS2 node for RPLIDAR
 
+install package
+```
+
+```
+
 Visit following Website for more details about RPLIDAR:
 
 rplidar roswiki: http://wiki.ros.org/rplidar
