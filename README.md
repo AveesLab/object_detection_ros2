@@ -10,6 +10,7 @@ git clone https://github.com/AveesLab/object-detection_ros2.git
 
 
 
+
 Visit following Website for more details about RPLIDAR:
 
 rplidar roswiki: http://wiki.ros.org/rplidar
