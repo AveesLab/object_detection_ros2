@@ -6,9 +6,9 @@ import launch
 
 def generate_launch_description():
     pcl_pbject_detection_node = Node(
-        package='pcl_object_detection',
-        executable='pcl_object_detection_node',
-        name='pcl_pbject_detection',
+        package='object_detection_ros2',
+        executable='object_detection_ros2_node',
+        name='object_detection',
         output={
             'stdout': 'screen',
             'stderr': 'screen',

@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.5.0)
 
-project(pcl_object_detection)
+project(object_detection_ros2)
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
@@ -32,12 +32,12 @@ find_package(laser_geometry REQUIRED)
 
 include_directories(include ${cv_bridge_INCLUDE_DIRS})
 
-add_library(pcl_object_detection SHARED
+add_library(object_detection_ros2 SHARED
   src/pcl_object_detection.cpp)
-target_compile_definitions(pcl_object_detection
+target_compile_definitions(object_detection_ros2
   PRIVATE "COMPOSITION_BUILDING_DLL")
 
-ament_target_dependencies(pcl_object_detection
+ament_target_dependencies(object_detection_ros2
     "rclcpp"
     "sensor_msgs"
     "std_msgs"
@@ -52,24 +52,24 @@ ament_target_dependencies(pcl_object_detection
   visualization_msgs
 )
 
-rclcpp_components_register_nodes(pcl_object_detection "pcl_object_detection::PclObjectDetection")
-set(node_plugins "${node_plugins}pcl_object_detection::PclObjectDetection;$<TARGET_FILE:pcl_object_detection>\n")
+rclcpp_components_register_nodes(object_detection_ros2 "object_detection_ros2::PclObjectDetection")
+set(node_plugins "${node_plugins}object_detection_ros2::PclObjectDetection;$<TARGET_FILE:object_detection_ros2>\n")
 
-add_executable(pcl_object_detection_node
+add_executable(object_detection_ros2_node
     src/pcl_object_detection_node.cpp)
-target_link_libraries(pcl_object_detection_node
-    pcl_object_detection
+target_link_libraries(object_detection_ros2_node
+    object_detection_ros2
     laser_geometry::laser_geometry
     
 )
     
-ament_target_dependencies(pcl_object_detection_node
+ament_target_dependencies(object_detection_ros2_node
     "rclcpp"
 )
 
 
 install(TARGETS
-    pcl_object_detection
+    object_detection_ros2
     ARCHIVE DESTINATION lib
     LIBRARY DESTINATION lib
     RUNTIME DESTINATION bin
@@ -77,7 +77,7 @@ install(TARGETS
 
 
 install(TARGETS
-    pcl_object_detection_node
+    object_detection_ros2_node
     DESTINATION lib/${PROJECT_NAME}
 )
 
