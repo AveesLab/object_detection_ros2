@@ -14,5 +14,5 @@ It's based on this package https://github.com/praveen-palanisamy/multiple-object
 
 
 ```
-git clone https://github.com/AveesLab/object-detection_ros2.git
+git clone https://github.com/AveesLab/object_detection_ros2.git
 ```
