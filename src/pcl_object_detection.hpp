@@ -54,6 +54,7 @@
 #include <laser_geometry/laser_geometry.hpp>
 #include <sensor_msgs/msg/point_cloud.hpp>
 #include <sensor_msgs/msg/laser_scan.hpp>
+#include "ros2_msg/msg/obj2xav.hpp"
 
 
 
@@ -106,6 +107,7 @@ private:
 
     rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
     rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr cc_pos;
+    rclcpp::Publisher<ros2_msg::msg::Obj2xav>::SharedPtr mindist;
     //rclcpp::Publisher<std_msgs::msg::Float32MultiArray>::SharedPtr cal_dist;
 
     bool first_frame = true;

@@ -73,6 +73,7 @@ PclObjectDetection::PclObjectDetection(
 
   cc_pos=this->create_publisher<std_msgs::msg::Float32MultiArray>("raw_obstacles",100);//clusterCenter1
   bbox_markers_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("viz", 10);
+  mindist=this->create_publisher<ros2_msg::msg::Obj2xav>("min_distance", 100);
 }
 
 void PclObjectDetection::kft(const std_msgs::msg::Float32MultiArray ccs)
@@ -476,7 +477,7 @@ void PclObjectDetection::cloud_callback(const sensor_msgs::msg::LaserScan::Const
         /* Cluster centroids */
         std::vector<pcl::PointXYZ> cluster_centroids;
 
-        //RCLCPP_INFO(this->get_logger(), "cluster_indices = %d %d %d", cluster_indices.end() - cluster_indices.begin(), cluster_indices.begin(), cluster_indices.end());
+//        RCLCPP_INFO(this->get_logger(), "cluster_indices = %d %d %d", cluster_indices.end() - cluster_indices.begin(), cluster_indices.begin(), cluster_indices.end());
 
         for (it = cluster_indices.begin(); it != cluster_indices.end(); ++it) {
             float x = 0.0;
@@ -485,19 +486,30 @@ void PclObjectDetection::cloud_callback(const sensor_msgs::msg::LaserScan::Const
             pcl::PointCloud<pcl::PointXYZ>::Ptr cloud_cluster(
               new pcl::PointCloud<pcl::PointXYZ>);
             for (pit = it->indices.begin(); pit != it->indices.end(); pit++) {
+  
+              cloud_cluster->points.push_back(input_cloud->points[*pit]);
+  
+              x += input_cloud->points[*pit].x;
+              y += input_cloud->points[*pit].y;
+              numPts++;
+              pcl::PointXYZ setup (input_cloud->points[*pit].x,0,0); 		 
+              dist_this_point = pcl::geometry::distance(/*input_cloud->points[*pit].x*/setup,
+                                                      origin);
+              mindist_this_cluster = std::min(dist_this_point,
+              mindist_this_cluster);
 
-            cloud_cluster->points.push_back(input_cloud->points[*pit]);
-
-            x += input_cloud->points[*pit].x;
-            y += input_cloud->points[*pit].y;
-            numPts++;
-
-            dist_this_point = pcl::geometry::distance(input_cloud->points[*pit],
-                                                     origin);
-            mindist_this_cluster = std::min(dist_this_point,
-            mindist_this_cluster);
+       // RCLCPP_INFO(this->get_logger(), "mindist in for = %f", mindist_this_cluster);
             }
-            
+          
+	  
+//        std_msgs::msg::Float32 md;
+//	//md.data.push_back(mindist_this_cluster);
+//       md.data = mindist_this_cluster;
+  	  ros2_msg::msg::Obj2xav dist;
+          dist.min_dist = mindist_this_cluster;	  
+	  mindist->publish(dist);// Publish cluster min_distance.
+
+//        RCLCPP_INFO(this->get_logger(), "mindist = %f", mindist_this_cluster);
 
             pcl::PointXYZ centroid;
             centroid.x = x / numPts;

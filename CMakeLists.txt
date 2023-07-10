@@ -29,6 +29,7 @@ find_package(shape_msgs REQUIRED)
 find_package(tf2_ros REQUIRED)
 find_package(visualization_msgs REQUIRED)
 find_package(laser_geometry REQUIRED)
+find_package(ros2_msg REQUIRED)
 
 include_directories(include ${cv_bridge_INCLUDE_DIRS})
 
@@ -50,6 +51,7 @@ ament_target_dependencies(object_detection_ros2
   shape_msgs
   tf2_ros
   visualization_msgs
+  ros2_msg
 )
 
 rclcpp_components_register_nodes(object_detection_ros2 "object_detection_ros2::PclObjectDetection")
