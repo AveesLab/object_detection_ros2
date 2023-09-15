@@ -218,7 +218,7 @@ void PclObjectDetection::publish_bbox_marker(std::vector<geometry_msgs::msg::Poi
         m.pose.position.z = cluster_c.z;
             
         cluster_markers.markers.push_back(m);
-	
+  
     }
 
     bbox_markers_pub_->publish(cluster_markers);
@@ -301,8 +301,8 @@ void PclObjectDetection::initialize_kalman_filter()
 
 void PclObjectDetection::cloud_callback(const sensor_msgs::msg::LaserScan::ConstPtr &scan)
 {
-    	auto input = std::make_unique<sensor_msgs::msg::PointCloud2>();
-    	projector_.projectLaser(*scan, *input);
+      auto input = std::make_unique<sensor_msgs::msg::PointCloud2>();
+      projector_.projectLaser(*scan, *input);
     
 
         /* Process the point cloud */
