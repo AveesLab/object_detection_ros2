@@ -73,7 +73,7 @@ PclObjectDetection::PclObjectDetection(
 
   cc_pos=this->create_publisher<std_msgs::msg::Float32MultiArray>("raw_obstacles",100);//clusterCenter1
   bbox_markers_pub_ = this->create_publisher<visualization_msgs::msg::MarkerArray>("viz", 10);
-  mindist=this->create_publisher<ros2_msg::msg::Obj2xav>("min_distance", 100);
+  mindist=this->create_publisher<ros2_msg::msg::Obj2xav>("min_distance", 10);
 }
 
 void PclObjectDetection::kft(const std_msgs::msg::Float32MultiArray ccs)
