@@ -217,7 +217,7 @@ void PclObjectDetection::publish_bbox_marker(std::vector<geometry_msgs::msg::Poi
         m.pose.position.z = cluster_c.z;
             
         cluster_markers.markers.push_back(m);
-	
+  
     }
 
     bbox_markers_pub_->publish(cluster_markers);
@@ -300,8 +300,8 @@ void PclObjectDetection::initialize_kalman_filter()
 
 void PclObjectDetection::cloud_callback(const sensor_msgs::msg::LaserScan::ConstPtr &scan)
 {
-    	auto input = std::make_unique<sensor_msgs::msg::PointCloud2>();
-    	projector_.projectLaser(*scan, *input);
+      auto input = std::make_unique<sensor_msgs::msg::PointCloud2>();
+      projector_.projectLaser(*scan, *input);
     if (first_frame)
     {
         /* Initialize Kalman Filters, same as number of clusters for tracking */
@@ -492,7 +492,7 @@ void PclObjectDetection::cloud_callback(const sensor_msgs::msg::LaserScan::Const
               x += input_cloud->points[*pit].x;
               y += input_cloud->points[*pit].y;
               numPts++;
-              pcl::PointXYZ setup (input_cloud->points[*pit].x,0,0); 		 
+              pcl::PointXYZ setup (input_cloud->points[*pit].x,0,0);     
               dist_this_point = pcl::geometry::distance(/*input_cloud->points[*pit].x*/setup,
                                                       origin);
               mindist_this_cluster = std::min(dist_this_point,
@@ -501,13 +501,13 @@ void PclObjectDetection::cloud_callback(const sensor_msgs::msg::LaserScan::Const
        // RCLCPP_INFO(this->get_logger(), "mindist in for = %f", mindist_this_cluster);
             }
           
-	  
+    
 //        std_msgs::msg::Float32 md;
-//	//md.data.push_back(mindist_this_cluster);
+//  //md.data.push_back(mindist_this_cluster);
 //       md.data = mindist_this_cluster;
-  	  ros2_msg::msg::Obj2xav dist;
-          dist.min_dist = mindist_this_cluster;	  
-	  mindist->publish(dist);// Publish cluster min_distance.
+      ros2_msg::msg::Obj2xav dist;
+          dist.min_dist = mindist_this_cluster;   
+    mindist->publish(dist);// Publish cluster min_distance.
 
 //        RCLCPP_INFO(this->get_logger(), "mindist = %f", mindist_this_cluster);
 
@@ -541,9 +541,9 @@ void PclObjectDetection::cloud_callback(const sensor_msgs::msg::LaserScan::Const
         }
 
         std_msgs::msg::Float32MultiArray cc;
-	
-	//cc.data.resize(18);
-	
+  
+  //cc.data.resize(18);
+  
         for (int i = 0; i < 6; i++) {
           cc.data.push_back(cluster_centroids.at(i).x);
           cc.data.push_back(cluster_centroids.at(i).y);
